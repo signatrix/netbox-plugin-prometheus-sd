@@ -112,7 +112,7 @@ def extract_contacts(obj, labels: LabelDict):
                 labels[f"contact_{contact.priority}_name"] = contact.contact.name
             if contact.contact.email:
                 labels[f"contact_{contact.priority}_email"] = contact.contact.email
-            if hasattr(contact, "phone") and contact.phone is not None:
+            if contact.contact.phone:
                 labels[f"contact_{contact.priority}_phone"] = contact.contact.phone
             if contact.contact.comments:
                 labels[f"contact_{contact.priority}_comments"] = contact.contact.comments
