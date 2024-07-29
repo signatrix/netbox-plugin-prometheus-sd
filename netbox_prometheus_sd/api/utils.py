@@ -70,6 +70,18 @@ def extract_cluster(obj, labels: LabelDict):
     if hasattr(obj, "site") and obj.site.physical_address is not None:
         labels["site_physical_address"] = obj.site.physical_address
 
+    if hasattr(obj, "site") and obj.site.contacts is not None:
+        for contact in obj.site.contacts.all():
+            if hasattr(contact, "contact") and contact.contact is not None:
+                labels[f"site_contact_{contact.priority}_name"] = contact.contact.name
+            if contact.contact.email:
+                labels[f"site_contact_{contact.priority}_email"] = contact.contact.email
+            if contact.contact.phone:
+                labels[f"site_contact_{contact.priority}_phone"] = contact.contact.phone
+            if contact.contact.comments:
+                labels[f"site_contact_{contact.priority}_comments"] = contact.contact.comments
+            if hasattr(contact, "role") and contact.role is not None:
+                labels[f"site_contact_{contact.priority}_role"] = contact.role.name
 
 def extract_primary_ip(obj, labels: LabelDict):
     if getattr(obj, "primary_ip", None) is not None:
